@@ -52,9 +52,14 @@ function Chat () {
             return;
         } else if (this.client.subscriptions[COUNTRY_ID] === undefined) {
             log.debug("Not subscribe country channel yet.");
-            this.client.subscribe(CHANNEL_COUNTRY);
+            this.client.subscribe(CHANNEL_COUNTRY, function _countrySubscribe(frame) {
+                if (frame) {
+                    log.debug(JSON.stringify(frame));
+                }
+            });
         }
-
+        if (content !== "") {
+            this.client.send(SEND_COUNTRY, content);
+        }
     };
-
 }
