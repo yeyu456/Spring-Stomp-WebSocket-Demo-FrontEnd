@@ -2,22 +2,24 @@
 
 require("babel-polyfill");
 
-let gulp = require('gulp');
-let gutil = require('gulp-util');
-let sourcemaps = require('gulp-sourcemaps');
-let del = require('del');
-let path = require('path');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const sourcemaps = require('gulp-sourcemaps');
+const del = require('del');
+const path = require('path');
+const eslint = require('gulp-eslint');
 
-let scriptDir = path.join(__dirname, 'browser', 'scripts');
+const scriptDir = path.join(__dirname, 'browser', 'scripts');
 
 gulp.task('check', function _check(cb) {
-    gulp.src(path.join(scriptDir, '*.js'))
-        .pipe(jslint());
+    return gulp.src(path.join(scriptDir, '*.js'))
+            .pipe(eslint('./'))
+            .pipe(eslint.format())
+            .pipe(eslint.failAfterError());
 });
 
-gulp.task('default', function _default(cb) {
-    console.log("test start");
-    let a = 1;
-    console.log(a);
+gulp.task('babel')
+
+gulp.task('default', ['check'], function _default(cb) {
     cb();
 });
