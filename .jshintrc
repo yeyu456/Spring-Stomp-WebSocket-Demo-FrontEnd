@@ -6,6 +6,6 @@
     "devel" : true,
     "browser" : true,
     "globals" : {
-        "chrome": true
+        "require": true
     }
 }

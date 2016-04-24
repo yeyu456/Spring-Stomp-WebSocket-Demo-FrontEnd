@@ -63,3 +63,5 @@ function Chat () {
         }
     };
 }
+
+let chat = new Chat();

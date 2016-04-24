@@ -19,7 +19,6 @@ export function setDisconnected(isSuccess, errMsg) {
 
 export function setCountryChat (content) {
     "use strict";
-
-    let contentElement = document.getElementById('cotent');
-    contentElement.text = cotent;
+    let contentElement = document.getElementById('id');
+    console.log("content:" + content);
 }
