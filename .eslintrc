@@ -1,6 +1,6 @@
 {
     "root": true,
     "rules":{
-
+        "func-names" : true
     }
 }
