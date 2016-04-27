@@ -1,6 +1,4 @@
 {
-	"disallowAnonymousFunctions": true,
-    "disallowEmptyBlocks": true,
     "disallowIdenticalDestructuringNames": true,
 
     "disallowIdentifierNames": [],

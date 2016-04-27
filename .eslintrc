@@ -1,6 +1,10 @@
 {
     "root": true,
     "rules":{
-        "func-names" : true
+        "func-names" : true,
+        "no-empty" : true,
+        "no-eval" : true,
+        "brace-style" : ["1tbs"],
+        
     }
 }
