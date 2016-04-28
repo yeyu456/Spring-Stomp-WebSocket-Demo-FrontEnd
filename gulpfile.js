@@ -15,21 +15,25 @@ const eslint = require('gulp-eslint');
 const gutil = require('gulp-util');
 const babel = require('gulp-babel');
 const sourcemaps = require('gulp-sourcemaps');
-const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 
-
-const script = path.join(__dirname, 'browser', 'scripts', '**', '*.js');
+const srcPath = path.join(__dirname, 'browser');
 const buildPath = path.join(__dirname, 'build');
-const buildScriptDir = path.join(buildPath, 'scripts');
-const resources = [path.join(buildPath, '*.html')];
 
-gulp.task('clean', function _clean(cb) {
+const resources = [path.join(srcPath, '*.html')];
+const script = path.join(__dirname, 'browser', 'scripts', '**', '*.js');
+const buildScriptDir = path.join(buildPath, 'scripts');
+
+gulp.task('start', function _start() {
+    gutil.log("\n\n*************Starting Build.*************\n\n");
+});
+
+gulp.task('clean', ['start'], function _clean(cb) {
     del.sync([buildScriptDir]);
     cb();
 });
 
-gulp.task('check', function _check(cb) {
+gulp.task('check', ['start'], function _check(cb) {
     gulp.src(script)
         .pipe(eslint('./.eslintrc'))
         .pipe(eslint.format())
@@ -41,7 +45,7 @@ gulp.task('copy', ['clean'], function _copy(cb) {
     gulp.src(resources)
         .pipe(gulp.dest(buildPath));
     cb();
-})
+});
 
 gulp.task('build', ['clean', 'check'], function _es6(cb) {
     gulp.src(script)
@@ -56,6 +60,6 @@ gulp.task('build', ['clean', 'check'], function _es6(cb) {
     cb();
 });
 
-gulp.task('default', ['build', 'copy'], function _default(cb) {
-    cb();
+gulp.task('default', ['build', 'copy'], function _default() {
+    gutil.log("\n\n*************Ending Build.*************\n\n");
 });

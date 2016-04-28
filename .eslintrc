@@ -1,10 +1,17 @@
 {
-    "root": true,
-    "rules":{
-        "func-names" : true,
-        "no-empty" : true,
-        "no-eval" : true,
-        "brace-style" : ["1tbs"],
-        
+    "root" : true,
+    "env" : {
+        "browser" : true,
+        "es6" : true
+    },
+    "parser" : "babel-eslint",
+    "parserOptions" : {
+        "sourceType" : "module"
+    },
+    "rules" : {
+        "func-names" : 1,
+        "no-empty" : 1,
+        "no-eval" : 1,
+        "brace-style" : [1, "1tbs"]
     }
 }

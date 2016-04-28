@@ -63,5 +63,38 @@ function Chat () {
         }
     };
 }
+const chat = new Chat();
 
-let chat = new Chat();
+function init() {
+    "use strict";
+
+    let enter = document.getElementById('enter');
+    if (enter) {
+        enter.addEventListener('keydown', function (e) {
+            if (e.keyCode === 13) {
+                chat.countryChat({content : e.target.value});
+                e.preventDefault();
+            }
+        });
+    }
+
+    let connect = document.getElementById('connect');
+    if (connect) {
+        connect.addEventListener('click', function (e) {
+            if (!e.target.disabled) {
+                chat.connect();
+            }
+        });
+    }
+
+    let disconnect = document.getElementById('disconnect');
+    if (disconnect) {
+        disconnect.addEventListener('click', function (e) {
+            if (!e.target.disabled) {
+                chat.disconnect();
+            }
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", init);
