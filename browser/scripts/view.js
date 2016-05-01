@@ -2,18 +2,20 @@
 export function setConnected(isSuccess, errMsg) {
     "use strict";
 
-    document.getElementById('connected').disabled = isSuccess;
     if (errMsg !== "") {
         alert(errMsg);
+    } else {
+        document.getElementById('connect').disabled = isSuccess;
     }
 }
 
 export function setDisconnected(isSuccess, errMsg) {
     "use strict";
 
-    document.getElementById('disconnected').disabled = isSuccess;
     if (errMsg !== "") {
         alert(errMsg);
+    } else {
+        document.getElementById('disconnect').disabled = isSuccess;
     }
 }
 

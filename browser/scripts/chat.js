@@ -1,24 +1,24 @@
-import {SockJS as sock} from 'sockjs-client';
-import {webstomp as stomp} from 'webstomp-client';
-import view from './view.js';
-import log from './log.js';
+import SockJS from 'sockjs-client';
+import webstomp from 'webstomp-client';
+import * as view from './view.js';
+import * as log from './log.js';
 
 function Chat () {
     "use strict";
 
-    const SOCKET_DEST = 'http://127.0.0.1/demo';
+    const SOCKET_DEST = 'http://192.168.11.106/demo';
     const CHANNEL_COUNTRY = "/channel/country";
     const SEND_COUNTRY = "/chat/country";
     const COUNTRY_ID = 1;
 
     this.client = null;
     this.connect = function _connect (callback) {
-        let socket = new sock(SOCKET_DEST);
-        this.client = stomp.over(socket);
+        let socket = new SockJS(SOCKET_DEST);
+        this.client = webstomp.over(socket);
         this.client.connect({},
-            function _connectCallback () {
+            function _connectCallback (frame) {
                 view.setConnected(true, "");
-                log.debug("Connected OK.");
+                log.debug("Connected OK." + frame);
                 if (callback) {
                     callback(true);
                 }
@@ -45,7 +45,7 @@ function Chat () {
             log.error("Null client.");
         }
     };
-    this.countryChat = function _countryChat ({time = Date.now().toLocaleDateString(), user = "Anoymous", content = ""} = {}) {
+    this.countryChat = function _countryChat ({time = (new Date).toLocaleDateString(), user = "Anoymous", content = ""} = {}) {
         if (this.client === null || !this.client.connected) {
             log.warn("Not connected.");
             view.setCountryChat("!!!ERROR!!!Not connected");
@@ -54,12 +54,12 @@ function Chat () {
             log.debug("Not subscribe country channel yet.");
             this.client.subscribe(CHANNEL_COUNTRY, function _countrySubscribe(frame) {
                 if (frame) {
-                    log.debug(JSON.stringify(frame));
+                    log.debug("subscribe:" + JSON.stringify(frame));
                 }
-            });
+            }, {id : COUNTRY_ID});
         }
         if (content !== "") {
-            this.client.send(SEND_COUNTRY, content);
+            this.client.send(SEND_COUNTRY, content, {});
         }
     };
 }
@@ -70,7 +70,7 @@ function init() {
 
     let enter = document.getElementById('enter');
     if (enter) {
-        enter.addEventListener('keydown', function (e) {
+        enter.addEventListener('keydown', function _onEnter(e) {
             if (e.keyCode === 13) {
                 chat.countryChat({content : e.target.value});
                 e.preventDefault();
@@ -80,7 +80,7 @@ function init() {
 
     let connect = document.getElementById('connect');
     if (connect) {
-        connect.addEventListener('click', function (e) {
+        connect.addEventListener('click', function _onClickConnect(e) {
             if (!e.target.disabled) {
                 chat.connect();
             }
@@ -89,7 +89,7 @@ function init() {
 
     let disconnect = document.getElementById('disconnect');
     if (disconnect) {
-        disconnect.addEventListener('click', function (e) {
+        disconnect.addEventListener('click', function _onClickDisconnect(e) {
             if (!e.target.disabled) {
                 chat.disconnect();
             }

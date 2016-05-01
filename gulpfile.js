@@ -13,16 +13,17 @@ const eslint = require('gulp-eslint');
 
 //Build Module
 const gutil = require('gulp-util');
-const babel = require('gulp-babel');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
+const webpack = require('webpack');
 
+//Path
+const webpackConf = require('./webpack.config.js');
+const script = path.join(__dirname, 'browser', 'scripts', '**', '*.js');
 const srcPath = path.join(__dirname, 'browser');
 const buildPath = path.join(__dirname, 'build');
-
 const resources = [path.join(srcPath, '*.html')];
-const script = path.join(__dirname, 'browser', 'scripts', '**', '*.js');
 const buildScriptDir = path.join(buildPath, 'scripts');
+
+
 
 gulp.task('start', function _start() {
     gutil.log("\n\n*************Starting Build.*************\n\n");
@@ -47,19 +48,24 @@ gulp.task('copy', ['clean'], function _copy(cb) {
     cb();
 });
 
-gulp.task('build', ['clean', 'check'], function _es6(cb) {
-    gulp.src(script)
-        .pipe(sourcemaps.init())
-        .pipe(babel({
-            presets : ['es2015'],
-            sourceMap: "inline",}))
-        .pipe(concat('chat.min.js'))
-        .pipe(uglify())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(buildScriptDir));
-    cb();
+gulp.task('build', ['clean', 'check'], function _build(cb) {
+
+    webpack(webpackConf, function _webpack(err, stats) {
+        if (err) {
+            gutil.log("[webpack] Error:", err);
+            cb(err);
+
+        } else {
+            gutil.log("[webpack] Success", stats.toString());
+            cb();
+        }
+    });
 });
 
 gulp.task('default', ['build', 'copy'], function _default() {
     gutil.log("\n\n*************Ending Build.*************\n\n");
+});
+
+gulp.task('watch', function _watch() {
+    gulp.watch(script, ['build']);
 });

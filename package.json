@@ -5,27 +5,21 @@
     "author": "yeyu456 <yeyu456@gmail.com>",
     "scripts": {
         "start": "gulp",
-        "watch": "gulp watch",
-        "development": "gulp",
-        "production": "gulp production"
+        "watch": "gulp watch"
     },
     "license": "MIT",
     "devDependencies": {
+        "sockjs-client": "^1.0.3",
+        "webstomp-client": "^1.0.2",
         "babel-core": "^6.7.4",
         "babel-loader": "^6.2.4",
         "babel-polyfill": "^6.7.4",
         "babel-preset-es2015": "^6.6.0",
         "babel-eslint": "^6.0.4",
-        "webstomp-client": "^1.0.2",
-        "sockjs-client": "^1.0.3",
-
-        "del": "^2.2.0",
         "gulp": "^3.9.1",
-        "gulp-babel": "^6.1.2",
-        "gulp-concat": "^2.6.0",
-        "gulp-uglify": "^1.5.3",
-        "gulp-sourcemaps": "^1.6.0",
         "gulp-util": "^3.0.7",
-        "gulp-eslint": "^2.0.0"
+        "gulp-eslint": "^2.0.0",
+        "del": "^2.2.0",
+        "webpack": "^2.1.0-beta.4"
     }
 }
