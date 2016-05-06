@@ -6,7 +6,7 @@ import * as log from './log.js';
 function Chat () {
     "use strict";
 
-    const SOCKET_DEST = 'http://192.168.11.106/demo';
+    const SOCKET_DEST = 'https://192.168.11.106/demo';
     const CHANNEL_COUNTRY = "/channel/country";
     const SEND_COUNTRY = "/chat/country";
     const COUNTRY_ID = 1;
