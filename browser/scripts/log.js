@@ -13,6 +13,6 @@ export function warn(log) {
 
 export function error(log) {
     "use strict";
-    
+
     console.error(log);
 }

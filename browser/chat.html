@@ -5,6 +5,11 @@
         <title>聊天室</title>
     </head>
     <script type="text/javascript" src="./scripts/chat.min.js"></script>
+    <style media="screen">
+        .hidden {
+            display: none;
+        }
+    </style>
     <body>
         <div class="main">
             <button type="button" name="button" id="connect">Connect</button>
@@ -13,6 +18,12 @@
                 test
             </p>
             <input id="enter">
+        </div>
+        <div class="auth hidden">
+            <input id="user">
+            <input id="password">
+            <button type="button" name="button" id="login">登陆</button>
+            <button type="button" name="button" id="cancel">取消</button>
         </div>
     </body>
 </html>
